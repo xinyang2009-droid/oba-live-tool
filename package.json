@@ -1,7 +1,7 @@
 {
   "name": "oba-live-tool",
   "type": "module",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": true,
   "description": "直播工具，用于直播带货，能自动弹窗，自动发言",
   "author": "qiutongxue",
@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder --publish never",
+    "build:win": "tsc && vite build && node ./scripts/build.js",
     "preview": "vite preview",
     "pretest": "vite build --mode=test",
     "test": "vitest run",

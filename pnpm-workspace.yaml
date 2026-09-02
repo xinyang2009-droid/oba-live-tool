@@ -1,0 +1,16 @@
+packages:
+  - .
+
+nodeLinker: hoisted
+verifyDepsBeforeRun: false
+
+blockExoticSubdeps: false
+strictDepBuilds: false
+
+overrides:
+  "@electron/node-gyp": "npm:@electron/node-gyp@10.2.0-electron.2"
+
+allowBuilds:
+  electron: true
+  electron-winstaller: false
+  esbuild: true

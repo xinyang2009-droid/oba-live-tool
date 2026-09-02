@@ -26,7 +26,11 @@ type LatestYml = {
   releaseDate: string
 }
 
-const GITHUB_OWNER = 'qiutongxue'
+// 二开定制：更新源已切换到团队自己的仓库
+// UPDATER_DISABLED 是更新功能总开关，改成 true 可一键关闭全部更新行为（不再联网检查）。
+const UPDATER_DISABLED = false
+
+const GITHUB_OWNER = 'xinyang2009-droid'
 const GITHUB_REPO = 'oba-live-tool'
 const CDN_URL = 'https://fastly.jsdelivr.net/gh/'
 const PRODUCT_NAME = packageJson.name
@@ -157,10 +161,15 @@ class UpdateManager {
   constructor(private updater: Updater) {}
 
   public async checkForUpdates(source = 'github') {
+    if (UPDATER_DISABLED) {
+      logger.debug('更新功能已关闭，跳过检查更新')
+      return
+    }
     await this.updater.checkForUpdates(source)
   }
 
   public async checkUpdateVersion() {
+    if (UPDATER_DISABLED) return
     const latestVersion = await getLatestVersion()
     if (!latestVersion) {
       return
@@ -182,6 +191,7 @@ class UpdateManager {
   }
 
   public async silentCheckForUpdate() {
+    if (UPDATER_DISABLED) return
     try {
       const result = await this.checkUpdateVersion()
       if (result) {
@@ -193,11 +203,13 @@ class UpdateManager {
   }
 
   public startDownload() {
+    if (UPDATER_DISABLED) return
     logger.info('开始下载更新……')
     this.updater.downloadUpdate()
   }
 
   public async quitAndInstall() {
+    if (UPDATER_DISABLED) return
     logger.info('准备退出并安装更新')
     this.updater.quitAndInstall()
   }
